@@ -9,8 +9,11 @@ app.get('/', function(req, res){
 io.on("connection", function(socket){
     console.log("A new user joined");
     socket.on("question",function(question){
-        socket.broadcast.emit("question",question);
+        socket.broadcast.emit("question",socket.name+" asked: "+question);
     })
+    socket.on("join",function(name){
+        socket.name=name;
+    });
 });
 
 server.listen(3000, function(){
